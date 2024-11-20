@@ -2,9 +2,9 @@ from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework import permissions
 
-from .serializers import PostSerializer
-from .models import Post
 from taggit.models import Tag
+from .serializers import PostSerializer, TagSerializer
+from .models import Post
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -20,3 +20,8 @@ class TagDetailView(generics.ListAPIView):
     def get_queryset(self):
         tag = Tag.objects.get(slug=self.kwargs["tag_slug"].lower())
         return Post.objects.filter(tag=tag)
+
+
+class TagView(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
