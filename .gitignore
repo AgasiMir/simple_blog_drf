@@ -1,0 +1,14 @@
+venv/
+.pylintrc
+__pycache__/
+
+
+
+fixtures/
+.vscode
+.idea
+.env
+
+db.sqlite3
+media/
+work.py
