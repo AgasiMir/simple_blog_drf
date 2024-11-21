@@ -12,7 +12,7 @@ class PostAdmin(admin.ModelAdmin):
         "title",
         "tag_list",
         "author",
-        # "get_comments_count",
+        "get_comments_count",
         "created_at",
     ]
     list_display_links = ["get_image", "title"]
@@ -49,9 +49,9 @@ class PostAdmin(admin.ModelAdmin):
             return mark_safe(f"<img src={obj.image.url} width=80%>")
         return "No image"
 
-    # @admin.display(description="comments")
-    # def get_comments_count(self, obj: Post):
-    #     return obj.comments.count()
+    @admin.display(description="comments")
+    def get_comments_count(self, obj: Post):
+        return obj.comments.count()
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related("tag")
@@ -80,6 +80,10 @@ class CommentAdmin(admin.ModelAdmin):
     list_per_page = 20
 
     readonly_fields = ["post", "username", "text", "created_date"]
+
+    @admin.display(description="text")
+    def get_text(self, obj: Comment):
+        return obj.text[:75] if len(obj.text) <= 125 else obj.text[:72] + "..."
 
 
 admin.site.site_title = "myblog_drf"

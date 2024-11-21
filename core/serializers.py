@@ -68,3 +68,14 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ["username"]
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    username = serializers.SlugRelatedField(
+        slug_field="username", queryset=get_user_model().objects.all()
+    )
+    post = serializers.SlugRelatedField(slug_field="slug", queryset=Post.objects.all())
+
+    class Meta:
+        model = Post
+        fields = ("id", "post", "username", "text", "created_date")
