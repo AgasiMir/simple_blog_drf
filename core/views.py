@@ -1,6 +1,6 @@
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
-from rest_framework import permissions, mixins
+from rest_framework import permissions, mixins, filters
 
 from taggit.models import Tag
 from .serializers import FeedbackSerializer, PostSerializer, TagSerializer
@@ -8,6 +8,8 @@ from .models import Feedback, Post
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    search_fields = ['title']
+    filter_backends = [filters.SearchFilter]
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     lookup_field = "slug"
