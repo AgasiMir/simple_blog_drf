@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework import permissions, mixins
 
 from taggit.models import Tag
-from .serializers import PostSerializer, TagSerializer
-from .models import Post
+from .serializers import FeedbackSerializer, PostSerializer, TagSerializer
+from .models import Feedback, Post
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -30,3 +30,8 @@ class TagView(generics.ListAPIView):
 class AsideView(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Post.objects.all()[:5]
     serializer_class = PostSerializer
+
+
+class FeedbackView(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer

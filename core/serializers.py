@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 
 from taggit.models import Tag
-from .models import Post
+from .models import Post, Feedback
 
 
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -25,3 +25,9 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ["name"]
         lookup_field = "name"
         extra_kwargs = {"url": {"lookup_field": "name"}}
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feedback
+        fields = ["subject", "name", "email", "body"]

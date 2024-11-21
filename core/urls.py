@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
-from .views import PostViewSet, TagDetailView, TagView, AsideView
+from .views import FeedbackView, PostViewSet, TagDetailView, TagView, AsideView
 
 
 """
@@ -13,6 +13,7 @@ AsideView нужно прописать в urlpatterns.
 router = DefaultRouter()
 router.register("posts", PostViewSet, basename="posts")
 router.register("aside", AsideView, basename="aside")
+router.register("feedback", FeedbackView, basename="feedback")
 
 
 urlpatterns = [
