@@ -25,4 +25,3 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ["name"]
         lookup_field = "name"
         extra_kwargs = {"url": {"lookup_field": "name"}}
-        
