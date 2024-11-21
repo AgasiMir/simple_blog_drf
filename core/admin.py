@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from core.models import Feedback, Post
+from core.models import Comment, Feedback, Post
 
 
 @admin.register(Post)
@@ -69,6 +69,17 @@ class ContactAdmin(admin.ModelAdmin):
     list_per_page = 20
 
     readonly_fields = ["name", "email", "subject", "body", "created_at"]
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ["username", "get_text", "created_date"]
+    list_display_links = ["username", "get_text"]
+    date_hierarchy = "created_date"
+    list_filter = ["created_date"]
+    list_per_page = 20
+
+    readonly_fields = ["post", "username", "text", "created_date"]
 
 
 admin.site.site_title = "myblog_drf"

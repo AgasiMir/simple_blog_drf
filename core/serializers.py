@@ -31,3 +31,40 @@ class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
         fields = ["subject", "name", "email", "body"]
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+
+    password_2 = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = [
+            "username",
+            "password",
+            "password_2",
+        ]
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        username = validated_data["username"]
+        password = validated_data["password"]
+        password_2 = validated_data["password_2"]
+        if password != password_2:
+            raise serializers.ValidationError({"password": "Пароли не совпадают"})
+        user = get_user_model()(username=username)
+        user.set_password(password)
+        user.save()
+        return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = "__all__"
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ["username"]
