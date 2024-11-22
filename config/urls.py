@@ -29,6 +29,8 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
+from debug_toolbar.toolbar import debug_toolbar_urls
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
@@ -38,7 +40,7 @@ urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/", include("core.urls")),
-]
+] + debug_toolbar_urls()
 
 
 if settings.DEBUG:

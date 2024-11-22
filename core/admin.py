@@ -4,6 +4,12 @@ from django.utils.safestring import mark_safe
 from core.models import Comment, Feedback, Post
 
 
+class CommentsInLine(admin.StackedInline):
+    model = Comment
+    readonly_fields = ["username", "post", "text", "created_date"]
+    extra = 0
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     search_fields = ["title", "author__username", "tag_list"]
@@ -35,7 +41,7 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ["get_fields_image"]
     raw_id_fields = ["author"]
 
-    # inlines = [CommentsInLine]
+    inlines = [CommentsInLine]
 
     @admin.display(description="image")
     def get_image(self, obj: Post):
@@ -54,7 +60,12 @@ class PostAdmin(admin.ModelAdmin):
         return obj.comments.count()
 
     def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related("tag")
+        return (
+            super()
+            .get_queryset(request)
+            .prefetch_related("tag", "comments")
+            .select_related("author")
+        )
 
     def tag_list(self, obj: Post):
         return ", ".join(o.name for o in obj.tag.all())
@@ -79,7 +90,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ["created_date"]
     list_per_page = 20
 
-    # readonly_fields = ["post", "username", "text", "created_date"]
+    readonly_fields = ["post", "username", "text", "created_date"]
 
     @admin.display(description="text")
     def get_text(self, obj: Comment):

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from datetime import timedelta
 import os
 from pathlib import Path
+from django.conf.global_settings import INTERNAL_IPS
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -32,6 +33,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,12 +55,14 @@ INSTALLED_APPS = [
 
     "taggit",
     'drf_spectacular',
+    # "debug_toolbar",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
