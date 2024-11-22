@@ -11,6 +11,8 @@ djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
 drf-spectacular==0.27.2
 executing==2.1.0
+factory-boy==3.3.1
+Faker==33.0.0
 importlib-resources==6.4.5
 inflection==0.5.1
 ipython==8.12.3
@@ -26,6 +28,7 @@ prompt-toolkit==3.0.48
 pure-eval==0.2.3
 pygments==2.18.0
 PyJWT==2.9.0
+python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 PyYAML==6.0.2
 referencing==0.35.1
