@@ -79,7 +79,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ["created_date"]
     list_per_page = 20
 
-    readonly_fields = ["post", "username", "text", "created_date"]
+    # readonly_fields = ["post", "username", "text", "created_date"]
 
     @admin.display(description="text")
     def get_text(self, obj: Comment):

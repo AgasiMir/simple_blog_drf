@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 
 from taggit.models import Tag
-from .models import Post, Feedback
+from .models import Comment, Post, Feedback
 
 
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -71,11 +71,14 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    username = serializers.SlugRelatedField(
-        slug_field="username", queryset=get_user_model().objects.all()
+    username = serializers.HiddenField(
+        default=serializers.CurrentUserDefault(),
     )
+    # username = serializers.SlugRelatedField(
+    #     slug_field="username", queryset=get_user_model().objects.all()
+    # )
     post = serializers.SlugRelatedField(slug_field="slug", queryset=Post.objects.all())
 
     class Meta:
-        model = Post
+        model = Comment
         fields = ("id", "post", "username", "text", "created_date")

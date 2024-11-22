@@ -1,7 +1,15 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
-from .views import FeedbackView, PostViewSet, TagDetailView, TagView, AsideView, UserViewSet
+from .views import (
+    CommentViewSet,
+    FeedbackView,
+    PostViewSet,
+    TagDetailView,
+    TagView,
+    AsideView,
+    UserViewSet,
+)
 
 
 """
@@ -15,10 +23,11 @@ router.register("posts", PostViewSet, basename="posts")
 router.register("aside", AsideView, basename="aside")
 router.register("feedback", FeedbackView, basename="feedback")
 router.register("users", UserViewSet, basename="users")
+router.register("comments", CommentViewSet, basename="comments")
 
 
 urlpatterns = [
     path("tags/", TagView.as_view()),
-    path('tags/<str:tag_slug>/', TagDetailView.as_view()),
+    path("tags/<str:tag_slug>/", TagDetailView.as_view()),
     # path('aside/', AsideView.as_view()),
 ] + router.urls
